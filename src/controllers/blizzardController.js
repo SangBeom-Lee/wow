@@ -1,5 +1,5 @@
 const blizzardService   = require('../services/blizzardService');
-const blizzardCharacter   = require('../services/blizzardCharacter');
+const blizzardCharacter = require('../services/blizzardCharacter');
 const config            = require('../config/blizzardConfig');
 
 exports.getIndex        = async (req, res, next) => {
@@ -15,10 +15,9 @@ exports.getIndex        = async (req, res, next) => {
 
 exports.getCharacter = async (req, res, next) => {
     try {
-        const service       = new blizzardService(config);
-        const item          = new blizzardCharacter();
         const params        = req.query;
-
+        const service       = new blizzardService(config);
+        
         //토큰
         let accessToken     = res?.cookies?.accessToken;
         if(!accessToken){
@@ -26,15 +25,19 @@ exports.getCharacter = async (req, res, next) => {
             res.cookie('accessToken', accessToken);
         }
 
-        //캐릭터 정보
-        const character     = await service.getInfo(accessToken, params, "character");
-        const items         = await item.getEquipment(accessToken, params);
-        const imageInfo     = await service.getInfo(accessToken, params, "media");
-        const image         = service.getKeyValueImage(imageInfo, 'assets');
+        params.accessToken  = accessToken;
+        const character     = new blizzardCharacter(params);
 
+        //캐릭터 정보
+        const {
+            info,
+            items,
+            image
+        }                   = await character.getCharacter();
 
         //쐐기 정보
         const mythicInfo    = await service.getInfo(accessToken, params, "mythic");
+        console.log(mythicInfo);
 
         //현재 시즌
         const season        = await service.getInfo(accessToken, params, "season");
@@ -44,7 +47,7 @@ exports.getCharacter = async (req, res, next) => {
         const mythic        = await service.getInfo(accessToken, params, "mythicSeason");
 
         const data          = {
-            character       : character,
+            info            : info,
             items           : items,
             image           : image,
             mythicInfo      : mythicInfo,

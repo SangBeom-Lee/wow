@@ -1,6 +1,6 @@
-<% if(character) { %>
-    <h1><%= character.active_title.name%> <%= character.name %></h1>
-    <p><%= character.active_spec.name%> <%= character.character_class.name%> <%= character.realm.name %></p>
+<% if(info) { %>
+    <h1><%= info.active_title.name%> <%= info.name %></h1>
+    <p><%= info.active_spec.name%> <%= info.character_class.name%> <%= info.realm.name %></p>
 <% } %>
 
 <% if(image) {%>
@@ -23,7 +23,7 @@
             <% for(let member of run.members){ %>                
                 <li>
                     닉네임: <%= member.character.name%>
-                    템렙: <%= member.equipped_item_level%>
+                    아이템레벨: <%= member.equipped_item_level%>
                 </li>
             <% } %>
         </ul>
