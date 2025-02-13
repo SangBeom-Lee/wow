@@ -1,0 +1,15 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./src:/usr/src/app/src  # 로컬 src 폴더를 컨테이너 src 폴더에 마운트
+      - /usr/src/app/node_modules # node_modules는 컨테이너 내부에 유지
+    environment:
+      - NODE_ENV=development
+    command: npm run dev # nodemon을 사용해 변경 사항 감지

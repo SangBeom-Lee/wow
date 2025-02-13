@@ -1,0 +1,31 @@
+<% if(character) { %>
+    <h1><%= character.active_title.name%> <%= character.name %></h1>
+    <p><%= character.active_spec.name%> <%= character.character_class.name%> <%= character.realm.name %></p>
+<% } %>
+
+<% if(image) {%>
+    <img src="<%= image.avatar%>" />
+<%}%>
+
+<% if(mythic) { %>
+    <h3>현재 시즌 점수 : <%= mythic.mythic_rating.rating %></h3>
+    
+    <% for(let run of mythic.best_runs){ %>
+        <p>던전 : <%= run.dungeon.name %> <%= run.keystone_level%>단</p>
+        <p></p>
+        <p>
+            어픽스 : 
+            <% for(let affixe of run.keystone_affixes){%>
+                <%= affixe.name%>
+            <% } %>
+        </p>
+        <ul>
+            <% for(let member of run.members){ %>                
+                <li>
+                    닉네임: <%= member.character.name%>
+                    템렙: <%= member.equipped_item_level%>
+                </li>
+            <% } %>
+        </ul>
+    <% } %>
+<% } %>
