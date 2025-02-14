@@ -38,6 +38,9 @@ class blizzardService {
             case "character":
                 url     = `${this.config.apiBaseUrl}/profile/wow/character/${params.realm}/${params.name}?namespace=profile-kr&locale=ko_KR`;
                 break;
+            case "characterList":
+                url     = `${this.config.apiBaseUrl}/profile/wow/character/${params.realm}/${params.name}?namespace=profile-kr&locale=ko_KR`;
+                break;
             case "equipment":
                 url     = `${this.config.apiBaseUrl}/profile/wow/character/${params.realm}/${params.name}/equipment?namespace=profile-kr&locale=ko_KR`;
                 break;
