@@ -1,12 +1,12 @@
-const blizzardService   = require('../services/blizzardService');
-const blizzardCharacter = require('../services/blizzardCharacter');
+const blizzardService   = require('../services/blizzardService');       //블리자드 연동 서비스
+const blizzardCharacter = require('../services/blizzardCharacter');     //캐릭터 서비스
+const blizzardMythic    = require('../services/blizzardMythic');        //쐐기정보 서비스
 const config            = require('../config/blizzardConfig');
 
 exports.getIndex        = async (req, res, next) => {
     try {
-        const service       = new blizzardService(config);
-        const params        = req.query;
-
+        const data      = {};
+        res.render('index/index', data);
     } catch (error) {
         console.log(error);
         next(error); // 에러를 미들웨어로 전달
@@ -17,7 +17,7 @@ exports.getCharacter = async (req, res, next) => {
     try {
         const params        = req.query;
         const service       = new blizzardService(config);
-        
+
         //토큰
         let accessToken     = res?.cookies?.accessToken;
         if(!accessToken){
@@ -26,32 +26,19 @@ exports.getCharacter = async (req, res, next) => {
         }
 
         params.accessToken  = accessToken;
-        const character     = new blizzardCharacter(params);
 
         //캐릭터 정보
-        const {
-            info,
-            items,
-            image
-        }                   = await character.getCharacter();
+        const character     = new blizzardCharacter(params);
+        const characterInfo = await character.getCharacter();
+        console.log(characterInfo.info);
 
         //쐐기 정보
-        const mythicInfo    = await service.getInfo(accessToken, params, "mythic");
-        console.log(mythicInfo);
-
-        //현재 시즌
-        const season        = await service.getInfo(accessToken, params, "season");
-
-        //쐐기 정보
-        params.season       = season.current_season.id;
-        const mythic        = await service.getInfo(accessToken, params, "mythicSeason");
+        const mythic        = new blizzardMythic(params);
+        const mythicInfo    = await mythic.getMythicInfo();
 
         const data          = {
-            info            : info,
-            items           : items,
-            image           : image,
-            mythicInfo      : mythicInfo,
-            mythic          : mythic
+            characterInfo   : characterInfo,
+            mythicInfo      : mythicInfo
         };
 
         res.render('character/view', data);

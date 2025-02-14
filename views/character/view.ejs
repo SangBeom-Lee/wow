@@ -1,16 +1,33 @@
-<% if(info) { %>
-    <h1><%= info.active_title.name%> <%= info.name %></h1>
-    <p><%= info.active_spec.name%> <%= info.character_class.name%> <%= info.realm.name %></p>
+<!-- 캐릭터 명 -->
+<% if(characterInfo?.character) { %>
+    <h1><%= characterInfo.character.active_title.name%> <%= characterInfo.character.name %></h1>
+    <p><%= characterInfo.character.active_spec.name%> <%= characterInfo.character.character_class.name%> <%= characterInfo.character.realm.name %></p>
 <% } %>
 
-<% if(image) {%>
-    <img src="<%= image.avatar%>" />
+<!-- 캐릭터 이미지 -->
+<% if(characterInfo?.image) {%>
+    <img src="<%= characterInfo.image.avatar%>" />
 <%}%>
 
-<% if(mythic) { %>
-    <h3>현재 시즌 점수 : <%= mythic.mythic_rating.rating %></h3>
+<!-- 캐릭터 장비 -->
+<% if(characterInfo?.items){%>
+    <ul>
+        <% for(let item of characterInfo.items){%>
+            <li>
+                <img src="<%= item.src%>" />
+                <p><%= item.type%></p>
+                <p><%= item.name%></p>
+                <p><%= item.level%></p>
+            </li>
+        <% } %>
+    </ul>
+<% } %>
+
+<!-- 캐릭터 쐐기 점수 -->
+<% if(mythicInfo?.data) { %>
+    <h3>현재 시즌 점수 : <%= mythicInfo.data.mythic_rating.rating %></h3>
     
-    <% for(let run of mythic.best_runs){ %>
+    <% for(let run of mythicInfo.data.best_runs){ %>
         <p>던전 : <%= run.dungeon.name %> <%= run.keystone_level%>단</p>
         <p></p>
         <p>

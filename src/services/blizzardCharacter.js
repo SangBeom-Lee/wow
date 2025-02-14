@@ -42,7 +42,7 @@ class blizzardCharacter {
      * @returns object
      */
     async getEquipment (){
-        const result        = {};
+        const result        = [];
         const equipment     = await this.#service.getInfo(this.#params.accessToken, this.#params, "equipment");
         const items         = equipment?.equipped_items;
 
@@ -52,7 +52,8 @@ class blizzardCharacter {
                 const media = await this.#service.getInfo(this.#params.accessToken, data, "equipment_media");
     
                 return {
-                    type    : gear.slot.type,
+                    kind    : gear.slot.type,
+                    type    : gear.slot.name,
                     name    : gear.name,
                     src     : media.assets[0].value,
                     level   : gear.level.value
@@ -61,7 +62,7 @@ class blizzardCharacter {
 
             const results   = await Promise.all(promises);
             results.forEach((row) => {
-                result[row.type] = row;
+                result.push(row);
             });
         }
 
