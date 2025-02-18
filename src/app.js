@@ -17,6 +17,7 @@ app.use(cookieParser());
 app.use(cors());
 app.use(express.json());
 app.use(express.static('public'));
+app.use(express.urlencoded({ extended: true }));
 
 // 라우트 설정
 app.use('/', blizzardRoutes);

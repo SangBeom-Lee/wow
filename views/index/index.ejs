@@ -1,6 +1,19 @@
-<input type="text" name="searchCharacter" id="searchCharacter" value="" />
-<ul name="searchList">
+<input type="text" name="name" id="name" value="" />
+<ul name="characterList" id="characterList">
 
 </ul>
 
-<script src="/public/js/index/index.js"></script>
+<form name="searchForm" id="searchForm" method="/character" style="display: none;">
+    <input type="hidden" name="realm"               value="azashara" />
+    <input type="hidden" name="character"   id=""   value="" />
+</form>
+<script type="text/javascript" src="/js/common/fetch.js"></script>
+<script type="text/javascript" src="/js/index/index.js"></script>
+<script type="text/javascript" src="/js/common/searchCharacter.js"></script>
+<script type="text/javascript">
+    new SearchCharacter({
+        form    : "searchForm",
+        keyword : "name",
+        list    : "characterList"
+    });
+</script>

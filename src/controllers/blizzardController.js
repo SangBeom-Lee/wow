@@ -12,14 +12,12 @@ class blizzardController {
 
     async getIndex (req, res, next){
         try {
-            console.log(req);
             const params        = req.query;
             const data          = {
                 
             };
             res.render('index/index', data);
         } catch (error) {
-            console.log(error);
             next(error); // 에러를 미들웨어로 전달
         }
     }
@@ -41,7 +39,6 @@ class blizzardController {
             //캐릭터 정보
             const character     = new blizzardCharacter(params);
             const characterInfo = await character.getCharacter();
-            console.log(characterInfo.info);
     
             //쐐기 정보
             const mythic        = new blizzardMythic(params);
@@ -54,7 +51,6 @@ class blizzardController {
     
             res.render('character/view', data);
         } catch (error) {
-            console.log(error);
             next(error); // 에러를 미들웨어로 전달
         }
     }
