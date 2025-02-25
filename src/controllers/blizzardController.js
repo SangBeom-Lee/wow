@@ -14,9 +14,9 @@ class blizzardController {
         try {
             const params        = req.query;
             const data          = {
-                
+                page            : 'index/index'
             };
-            res.render('index/index', data);
+            res.render('layout', data);
         } catch (error) {
             next(error); // 에러를 미들웨어로 전달
         }
@@ -46,10 +46,11 @@ class blizzardController {
     
             const data          = {
                 characterInfo   : characterInfo,
-                mythicInfo      : mythicInfo
+                mythicInfo      : mythicInfo,
+                page            : 'character/view'
             };
     
-            res.render('character/view', data);
+            res.render('layout', data);
         } catch (error) {
             next(error); // 에러를 미들웨어로 전달
         }

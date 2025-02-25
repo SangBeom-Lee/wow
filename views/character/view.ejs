@@ -1,52 +1,92 @@
-<!-- 캐릭터 명 -->
-<% if(characterInfo?.character) { %>
-    <h1><%= characterInfo.character.active_title.name%> <%= characterInfo.character.name %></h1>
-    <p><%= characterInfo.character.active_spec.name%> <%= characterInfo.character.character_class.name%> <%= characterInfo.character.realm.name %></p>
-<% } %>
+<div class="container">
 
-<!-- 캐릭터 이미지 -->
-<% if(characterInfo?.image) {%>
-    <img src="<%= characterInfo.image.avatar%>" />
-<%}%>
+    <!-- 캐릭터 카드 -->
+    <% if(characterInfo?.character) { %>
+        <div class="card">
+            <div class="card-content">
+                <h4 class="card-title">
+                    <% if(characterInfo.character?.active_title?.name){%>
+                        <%= characterInfo.character.active_title.name%>
+                    <%}%>
+                    <%= characterInfo.character.name %>
+                </h4>
+                <p class="grey-text text-darken-1">
+                    <%= characterInfo.character.active_spec.name%> 
+                    <%= characterInfo.character.character_class.name%> 
+                    (<%= characterInfo.character.realm.name %>)
+                </p>
+            </div>
+        </div>
+    <% } %>
 
-<!-- 캐릭터 장비 -->
-<% if(characterInfo?.items){%>
-    <ul>
-        <% for(let item of characterInfo.items){%>
-            <li>
-                <img src="<%= item.src%>" />
-                <p><%= item.type%></p>
-                <p><%= item.name%></p>
-                <p><%= item.level%></p>
-            </li>
-        <% } %>
-    </ul>
-<% } %>
+    <!-- 캐릭터 이미지 -->
+    <% if(characterInfo?.image) {%>
+        <div class="center">
+            <img src="<%= characterInfo.image.avatar%>" class="circle responsive-img">
+        </div>
+    <% } %>
 
-<!-- 캐릭터 쐐기 점수 -->
-<% if(mythicInfo?.data) { %>
-    <% if(mythicInfo?.data?.mythic_rating){%>
-        <h3>현재 시즌 점수 : <%= mythicInfo.data.mythic_rating.rating %></h3>
-    <%}%>
-    
-    <% if(mythicInfo.data.best_runs){ %>
-        <% for(let run of mythicInfo.data.best_runs){ %>
-            <p>던전 : <%= run.dungeon.name %> <%= run.keystone_level%>단</p>
-            <p></p>
-            <p>
-                어픽스 : 
-                <% for(let affixe of run.keystone_affixes){%>
-                    <%= affixe.name%>
-                <% } %>
-            </p>
-            <ul>
-                <% for(let member of run.members){ %>                
-                    <li>
-                        닉네임: <%= member.character.name%>
-                        아이템레벨: <%= member.equipped_item_level%>
-                    </li>
-                <% } %>
-            </ul>
+    <!-- 캐릭터 장비 -->
+    <% if(characterInfo?.items){%>
+        <h5>🛡 장비 목록</h5>
+        <div class="row">
+            <% for(let item of characterInfo.items){%>
+            <div class="col s6 m4 l3">
+                <div class="card small">
+                    <div class="card-image">
+                        <img src="<%= item.src%>">
+                    </div>
+                    <div class="card-content">
+                        <p class="truncate"><strong><%= item.name%></strong></p>
+                        <p class="grey-text">Lv. <%= item.level%></p>
+                    </div>
+                </div>
+            </div>
+            <% } %>
+        </div>
+    <% } %>
+
+    <!-- 캐릭터 쐐기 점수 -->
+    <% if(mythicInfo?.data) { %>
+        <h5>🏆 쐐기 점수</h5>
+        <% if(mythicInfo?.data?.mythic_rating){%>
+            <h6 class="blue-text text-darken-2">현재 시즌 점수: <%= mythicInfo.data.mythic_rating.rating %></h6>
+        <%}%>
+
+        <% if(mythicInfo.data.best_runs){ %>
+            <table class="striped centered">
+                <thead>
+                    <tr>
+                        <th>던전</th>
+                        <th>단계</th>
+                        <th>어픽스</th>
+                        <th>파티원</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% for(let run of mythicInfo.data.best_runs){ %>
+                    <tr>
+                        <td><%= run.dungeon.name %></td>
+                        <td><%= run.keystone_level%>단</td>
+                        <td>
+                            <% for(let affixe of run.keystone_affixes){%>
+                                <span class="chip blue lighten-3"><%= affixe.name%></span>
+                            <% } %>
+                        </td>
+                        <td>
+                            <ul class="collection">
+                                <% for(let member of run.members){ %>                
+                                <li class="collection-item">
+                                    <strong><%= member.character.name%></strong> (iLv. <%= member.equipped_item_level%>)
+                                </li>
+                                <% } %>
+                            </ul>
+                        </td>
+                    </tr>
+                    <% } %>
+                </tbody>
+            </table>
         <% } %>
     <% } %>
-<% } %>
+
+</div>
