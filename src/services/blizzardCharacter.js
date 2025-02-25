@@ -15,8 +15,17 @@ class blizzardCharacter {
      * 캐릭터 정보만 불러오기
      */
     async getCharacterOnly() {
+        const result        = {
+            code            : 500,
+            character       : {}
+        };
         const character     = await this.#service.getInfo(this.#params.accessToken, this.#params, 'character');
-        return character;
+        if(character.id){
+            result.code     = 200;
+            result.character= character;
+        }
+
+        return result;
     }
 
     /**

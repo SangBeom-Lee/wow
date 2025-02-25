@@ -21,19 +21,26 @@ class SearchCharacter {
     }
 
     async #searchCharacter (e){
-        console.log(e);
+
         const value     = document.getElementById(this.#keyword).value;
         const opt       = {realm: 'azshara', name: value};
 
-        if(value.length > 3){
+        if(value.length > 3 && e.keyCode == 13){
             await apiFetchPost('/character', opt, (row) => {
-                const list  = document.getElementById(this.#list);
-                const li    = "<li>"+ row.realm.name + " " + row.name + "</li>";
+                const code  = row.code;
 
-                list.innerHTML(li);
-
-                //목록에서 선택
-                this.#selCharacter();
+                if(code == 200){
+                    const cha   = row.character;
+                    const list  = document.getElementById(this.#list);
+                    const li    = "<li><a href='/character?realm=azshara&name="+ cha.name +"'>"+ cha.realm.name + " " + cha.name + "</a></li>";
+    
+                    list.innerHTML = li;
+    
+                    //목록에서 선택
+                    this.#selCharacter();
+                } else {
+                    alert("존재하지 않는 캐릭터다 똑바로 써라. 그리고 서버는 아즈샤라만이니 알아서 해라");
+                }
             });
         }
     }

@@ -23,7 +23,6 @@ class blizzardPostController {
         params.accessToken  = accessToken;
         
         const character     = new blizzardCharacter(params);
-        console.log(character);
         const characterInfo = await character.getCharacterOnly();
 
         res.json(characterInfo);

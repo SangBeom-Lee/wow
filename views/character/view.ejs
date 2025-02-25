@@ -25,24 +25,28 @@
 
 <!-- 캐릭터 쐐기 점수 -->
 <% if(mythicInfo?.data) { %>
-    <h3>현재 시즌 점수 : <%= mythicInfo.data.mythic_rating.rating %></h3>
+    <% if(mythicInfo?.data?.mythic_rating){%>
+        <h3>현재 시즌 점수 : <%= mythicInfo.data.mythic_rating.rating %></h3>
+    <%}%>
     
-    <% for(let run of mythicInfo.data.best_runs){ %>
-        <p>던전 : <%= run.dungeon.name %> <%= run.keystone_level%>단</p>
-        <p></p>
-        <p>
-            어픽스 : 
-            <% for(let affixe of run.keystone_affixes){%>
-                <%= affixe.name%>
-            <% } %>
-        </p>
-        <ul>
-            <% for(let member of run.members){ %>                
-                <li>
-                    닉네임: <%= member.character.name%>
-                    아이템레벨: <%= member.equipped_item_level%>
-                </li>
-            <% } %>
-        </ul>
+    <% if(mythicInfo.data.best_runs){ %>
+        <% for(let run of mythicInfo.data.best_runs){ %>
+            <p>던전 : <%= run.dungeon.name %> <%= run.keystone_level%>단</p>
+            <p></p>
+            <p>
+                어픽스 : 
+                <% for(let affixe of run.keystone_affixes){%>
+                    <%= affixe.name%>
+                <% } %>
+            </p>
+            <ul>
+                <% for(let member of run.members){ %>                
+                    <li>
+                        닉네임: <%= member.character.name%>
+                        아이템레벨: <%= member.equipped_item_level%>
+                    </li>
+                <% } %>
+            </ul>
+        <% } %>
     <% } %>
 <% } %>

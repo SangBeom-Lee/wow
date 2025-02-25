@@ -77,6 +77,9 @@ class blizzardService {
     async getInfo (accessToken, params = {}, kind){
         const url       = this.getUrl(kind, params);
         const response  = await axios.get(url, {
+            validateStatus: function (status) {
+                return status < 500; // 500 미만의 상태 코드는 에러로 처리하지 않음
+            },    
             headers: {
                 Authorization: `Bearer ${accessToken}`,
             }
