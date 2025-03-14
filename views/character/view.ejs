@@ -59,6 +59,7 @@
                     <tr>
                         <th>던전</th>
                         <th>단계</th>
+                        <th>점수</th>
                         <th>어픽스</th>
                         <th>파티원</th>
                     </tr>
@@ -68,6 +69,7 @@
                     <tr>
                         <td><%= run.dungeon.name %></td>
                         <td><%= run.keystone_level%>단</td>
+                        <td><%= run.rating%>점</td>
                         <td>
                             <% for(let affixe of run.keystone_affixes){%>
                                 <span class="chip blue lighten-3"><%= affixe.name%></span>
@@ -76,9 +78,9 @@
                         <td>
                             <ul class="collection">
                                 <% for(let member of run.members){ %>                
-                                <li class="collection-item">
-                                    <strong><%= member.character.name%></strong> (iLv. <%= member.equipped_item_level%>)
-                                </li>
+                                    <li class="collection-item">
+                                        <strong><a href="/character?relam=<%= member.character.relam.slug%>&name=<%= member.character.name%>"><%= member.character.name%></a></strong> (iLv. <%= member.equipped_item_level%>)
+                                    </li>
                                 <% } %>
                             </ul>
                         </td>

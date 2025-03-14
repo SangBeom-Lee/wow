@@ -62,6 +62,9 @@ class blizzardService {
             case "mythicSeason":
                 url     = `${this.config.apiBaseUrl}/profile/wow/character/${params.realm}/${params.name}/mythic-keystone-profile/season/${params.season}?namespace=profile-kr&locale=ko_KR`;
                 break;
+            case "dungeon":
+                url     = `${this.config.apiBaseUrl}/data/wow/mythic-keystone/dungeon/?namespace=dynamic-kr`;
+                break;
         }
     
         return url;

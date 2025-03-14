@@ -55,6 +55,16 @@ class blizzardController {
             next(error); // 에러를 미들웨어로 전달
         }
     }
+
+    /**
+     * 현재 시즌 던전
+     * @param {*} req 
+     * @param {*} res 
+     * @param {*} next 
+     */
+    async getMythicDungeon (req, res, next){
+
+    }
 }
 
 module.exports = new blizzardController();

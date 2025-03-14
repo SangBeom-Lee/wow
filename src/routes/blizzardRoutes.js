@@ -12,4 +12,7 @@ router.post('/character', blizzardPostController.getCharacter);
 router.get('/', blizzardController.getIndex);
 router.get('/character', blizzardController.getCharacter);
 
+//현재시즌 던전
+router.get('/dungeon', blizzardController.getCharacter);
+
 module.exports = router;
