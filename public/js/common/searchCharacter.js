@@ -25,7 +25,7 @@ class SearchCharacter {
         const value     = document.getElementById(this.#keyword).value;
         const opt       = {realm: 'azshara', name: value};
 
-        if(value.length > 3 && e.keyCode == 13){
+        if(value.length >= 2 && e.keyCode == 13){
             await apiFetchPost('/character', opt, (row) => {
                 const code  = row.code;
 

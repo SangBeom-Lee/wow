@@ -104,9 +104,11 @@ class blizzardService {
     getKeyValueImage (params, key) {
         let data        = [];
 
-        params[key].forEach(row => {
-            data[row['key']]    = row['value'];
-        });
+        if(params.length > 0){
+            params[key].forEach(row => {
+                data[row['key']]    = row['value'];
+            });
+        }        
 
         return data;
     }
