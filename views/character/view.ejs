@@ -50,7 +50,7 @@
     <% if(mythicInfo?.data) { %>
         <h5>🏆 쐐기 점수</h5>
         <% if(mythicInfo?.data?.mythic_rating){%>
-            <h6 class="blue-text text-darken-2">현재 시즌 점수: <%= mythicInfo.data.mythic_rating.rating %></h6>
+            <h6 class="blue-text text-darken-2">현재 시즌 점수: <%= parseInt(mythicInfo.data.mythic_rating.rating) %></h6>
         <%}%>
 
         <% if(mythicInfo?.data?.best_runs){ %>
@@ -66,25 +66,29 @@
                 </thead>
                 <tbody>
                     <% for(let run of mythicInfo.data.best_runs){ %>
-                    <tr>
-                        <td><%= run.dungeon.name %></td>
-                        <td><%= run.keystone_level%>단</td>
-                        <td><%= run.rating%>점</td>
-                        <td>
-                            <% for(let affixe of run.keystone_affixes){%>
-                                <span class="chip blue lighten-3"><%= affixe.name%></span>
-                            <% } %>
-                        </td>
-                        <td>
-                            <ul class="collection">
-                                <% for(let member of run.members){ %>                
-                                    <li class="collection-item">
-                                        <strong><a href="/character?realm=<%= member.character.realm.slug%>&name=<%= member.character.name%>"><%= member.character.name%></a></strong> (iLv. <%= member.equipped_item_level%>)
-                                    </li>
-                                <% } %>
-                            </ul>
-                        </td>
-                    </tr>
+                        <% if(run.is_completed_within_time){%>
+                            <tr>
+                                <td><%= run.dungeon.name %></td>
+                                <td><%= run.keystone_level%>단</td>
+                                <td><%= parseInt(run.mythic_rating.rating)%>점</td>
+                                <td>
+                                    <% if(run?.keystone_affixes){%>
+                                        <% for(let affixe of run.keystone_affixes){%>
+                                            <span class="chip blue lighten-3"><%= affixe.name%></span>
+                                        <% } %>
+                                    <% } %>
+                                </td>
+                                <td>
+                                    <ul class="collection">
+                                        <% for(let member of run.members){ %>                
+                                            <li class="collection-item">
+                                                <strong><a href="/character?realm=<%= member.character.realm.slug%>&name=<%= member.character.name%>"><%= member.character.name%></a></strong> (iLv. <%= member.equipped_item_level%>)
+                                            </li>
+                                        <% } %>
+                                    </ul>
+                                </td>
+                            </tr>
+                        <% } %>                    
                     <% } %>
                 </tbody>
             </table>
